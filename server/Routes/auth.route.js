@@ -1,13 +1,20 @@
 import express from "express"
-import { login, logout, signup } from "../controller/auth.controller.js";
+import { login, logout, onBoard, signup } from "../controller/auth.controller.js";
+import { protectRoute } from "../middleware/auth.middleware.js";
 const router = express.Router();
 
-router.post('/login',login)
+router.post('/login', login)
 router.post('/logout', logout)
 router.post('/signup', signup)
 
-router.post('/', (req, res) => {
-   res.send('Hello World');
+router.post('/onboarding', protectRoute, onBoard);
+router.get('/me', protectRoute, (req, res) => {
+   res.status(200).json({
+      success: true,
+      message: 'User fetched successfully',
+      user: req.user
+   })
 })
+
 
 export default router;

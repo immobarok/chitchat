@@ -1,17 +1,17 @@
 import { StreamChat } from 'stream-chat';
 import "dotenv/config";
 
-const apiKey = process.env.STREAM_API_KEY;
-const apiSecret = process.env.STREAM_API_SECRET;
+const apiKey = process.env.CHITCHAT_API;
+const apiSecret = process.env.CHITCHAT_API_SECRET;
 
 if (!apiKey || !apiSecret) {
-   console.error("STREAM_API_KEY and STREAM_API_SECRET must be set");
+   console.error("STREAM_API_KEY and CHITCHAT_API_SECRET must be set");
 }
 
 const streamClient = StreamChat.getInstance(apiKey, apiSecret);
 export const upsertStreamUser = async (userData) => {
    try {
-      await streamClient.upsertUser([userData])
+      await streamClient.upsertUsers([userData])
       return userData
    } catch (error) {
       console.error("Error upserting stream user", error);
