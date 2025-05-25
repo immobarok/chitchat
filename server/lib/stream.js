@@ -1,28 +1,30 @@
-import { StreamChat } from 'stream-chat';
+import { StreamChat } from "stream-chat";
 import "dotenv/config";
 
-const apiKey = process.env.CHITCHAT_API;
-const apiSecret = process.env.CHITCHAT_API_SECRET;
+const apiKey = process.env.STEAM_API_KEY;
+const apiSecret = process.env.STEAM_API_SECRET;
 
 if (!apiKey || !apiSecret) {
-   console.error("STREAM_API_KEY and CHITCHAT_API_SECRET must be set");
+   console.error("Stream API key or Secret is missing");
 }
 
 const streamClient = StreamChat.getInstance(apiKey, apiSecret);
+
 export const upsertStreamUser = async (userData) => {
    try {
-      await streamClient.upsertUsers([userData])
-      return userData
+      await streamClient.upsertUsers([userData]);
+      return userData;
    } catch (error) {
-      console.error("Error upserting stream user", error);
+      console.error("Error upserting Stream user:", error);
    }
-}
+};
 
 export const generateStreamToken = (userId) => {
    try {
+      // ensure userId is a string
       const userIdStr = userId.toString();
       return streamClient.createToken(userIdStr);
    } catch (error) {
-      console.error("Error generating stream token", error);
+      console.error("Error generating Stream token:", error);
    }
- };
+};
